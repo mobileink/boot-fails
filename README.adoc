@@ -28,13 +28,13 @@ information about boot's state.  Clojure beginners can learn from the
 source code how to examine namespaces, list interned symbols, etc.
 
 Of course you can also use the excellent
-https://github.com/seancorfield/boot-new[boot-new] to create a new
-boot project and start playing around there.  `boot-fails` is not
-really intended as a template, though.  It includes (or will include,
-maybe) stuff that is useful for exploring and breaking things that you
-would not want in a template.  You would want to use `boot-new` once
-you've played around with `boot-fails`, rather than use the latter as
-the starting point of a new project.
+https://github.com/seancorfield/boot-new[boot-new] or similar to
+create a new boot project and start playing around there.
+`boot-fails` is not really intended as a template, though.  It
+includes (or will include, maybe) stuff that is useful for exploring
+and breaking things that you would not want in a template.  You would
+want to use `boot-new` once you've played around with `boot-fails`,
+rather than use the latter as the starting point of a new project.
 
 = getting started
 
@@ -80,6 +80,12 @@ The envisioned usage is that you would spend a little time exploring
 some bits of the API in a dedicated branch, and then delete it once
 you've learned what not to do.
 
+
+= contributing fails
+
+If you have a nice fail that you think others could learn from, put it
+on a branch and I'll add it.  Just make sure it contains only the code
+essential to illustrating the fail, to keep things clean and simple.
 
 = roadmap
 
