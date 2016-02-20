@@ -27,6 +27,51 @@ is provide a structure and some debugging tasks you can use to dump
 information about boot's state.  Clojure beginners can learn from the
 source code how to examine namespaces, list interned symbols, etc.
 
-== roadmap
+= getting started
+
+Fork/clone the project, then install the library component and run the
+app component:
+
+[source,clojure]
+----
+git clone https://github.com/mobileink/boot-fails.git
+cd boot-fails/lib
+boot watch pom jar install
+----
+
+The lib project is `tmp.boot/boot-fails`, which installs to
+`~/.m2/repository/tmp/` so it doesn't clutter your repo.
+
+The `boot watch pom jar install` pipeline is what allows you to
+experiment with the library.  The `watch` task will monitor the
+sources, and when it detects changes it will launch the remainder of
+the pipeline, which will install the updated version into the local
+repo.
+
+Then start experimenting with the app, which uses the lib:
+
+[source,clojure]
+----
+$ cd ../app
+$ cat build.boot
+$ boot -vb        ## standard boot cmd to dump boot config to stdout
+$ boot help       ## look for the fails tasks
+$ boot fails/nss -h  ## print help for task fails/nss
+$ boot fails/nss  ## list namespaces
+$ boot fails/ns- -n foo.bar  ## list syms interned in ns foo.bar
+----
+
+= breaking stuff
+
+If you want to start breaking things, you should make a git branch for
+each "topic" you explore.  That keeps the master branch clean so you
+can pull any updates to it easily.
+
+The envisioned usage is that you would spend a little time exploring
+some bits of the API in a dedicated branch, and then delete it once
+you've learned what not to do.
+
+
+= roadmap
 
 * add some tasks designed to demo and explore pods.
