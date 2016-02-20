@@ -1,5 +1,3 @@
-= boot-fails
-
 [quote, Henry Petroski, Design Paradigms: Case Histories of Error and Judgment in Engineering]
 ____
 The concept of failure is central to the design process, and it is by
@@ -8,3 +6,6 @@ achieved. It has long been practically a truism among practicing
 engineers and designers that we learn much more from failures than
 from successes.
 ____
+
+= boot-fails
+
