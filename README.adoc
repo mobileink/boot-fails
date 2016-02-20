@@ -27,6 +27,15 @@ is provide a structure and some debugging tasks you can use to dump
 information about boot's state.  Clojure beginners can learn from the
 source code how to examine namespaces, list interned symbols, etc.
 
+Of course you can also use the excellent
+https://github.com/seancorfield/boot-new[boot-new] to create a new
+boot project and start playing around there.  `boot-fails` is not
+really intended as a template, though.  It includes (or will include,
+maybe) stuff that is useful for exploring and breaking things that you
+would not want in a template.  You would want to use `boot-new` once
+you've played around with `boot-fails`, rather than use the latter as
+the starting point of a new project.
+
 = getting started
 
 Fork/clone the project, then install the library component and run the
