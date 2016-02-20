@@ -70,6 +70,13 @@ $ boot fails/nss  ## list namespaces
 $ boot fails/ns- -n foo.bar  ## list syms interned in ns foo.bar
 ----
 
+== out-of-the-box failure
+
+I put this thing together as a result of not really understanding some
+things about namespaces and using vars to store configuration info.
+Look for the three \*-config vars in the lib and app, and the `vars`
+task in the lib.
+
 = breaking stuff
 
 If you want to start breaking things, you should make a git branch for
