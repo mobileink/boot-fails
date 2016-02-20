@@ -1,0 +1,213 @@
+micha
+@mobileink: i have a recommendatation for the boot-gae task
+
+[7:30] 
+you should use a file in tehe fileset with a distinct extension as the place to hold the configuration, like `myproject.gae.edn` for example
+
+[7:30] 
+instead of defining a var
+
+[7:30] 
+this will provide an extension point for other tasks to generate the config
+
+[7:31] 
+and modify it
+
+alandipert [7:31 AM] 
+or put it in a library
+
+micha [7:31 AM] 
+if you use a var then you are making it basically unmanaged shared mutable state
+
+[7:32] 
+the fileset is managed, in that when the pipeline restarts, like if the watch task is used, for example, any changes to files in the fileset by subsequent tasks in the pipeline are not visible to tasks that come before them in the pipeline
+
+[7:33] 
+which is not so for a var, because vars don't "rewind" their state each time the pipeline runs
+
+[7:34] 
+also did you see the `web` task that creates the web.xml?
+
+mobileink [8:33 AM] 
+@micha: boot mrj/bar -n foo.bar wait -t 2000 - still no output.  Adding (flush) didn't work either.  But I think the problem is I need to study pods a bit more.
+
+[8:34] 
+@micha: @alandipert re: boot-gae config file, thanks, I will do that.
+
+[8:38] 
+I did look at `web`.  it's a good candidate for extending boot-gae.  when i get the time i'll figure out how to integrate it - maybe it works is, just haven't tested it yet.
+
+[8:38] 
+correction: maybe it works as-is
+
+micha [8:38 AM] 
+i would like to extend the web task to accomodate filters etc
+
+[8:38] 
+but also perhaps gae could operate on an existing web.xml created by the web task if one exists
+
+mobileink [8:38 AM] 
+I'd be glad to share whatever I've learned working on boot-gae and migae
+
+micha [8:39 AM] 
+that way the user could compose gae with other tasks that manipulate the web.xml
+
+[8:40] 
+the general pattern with boot tasks is to factor into separate tasks
+
+[8:40] 
+that's why none of the tasks you see have big configuration maps
+
+mobileink [8:40 AM] 
+excellent idea.  I'd better add a "roadmap" section to the readme with planned enhancements.  Or if you feel like it feel free to create an issue.  maybe that's what I'll do instead of a roadmap.
+
+micha [8:40 AM] 
+instead, configuration is done in multiple separate tasks
+
+[8:40] 
+each doing only one thing
+
+[8:40] 
+so you can swap out any part of it with a different thing
+
+[8:41] 
+when you have a big config map you need to add more keys to the map with branching logic in the one monolothic task
+
+[8:41] 
+if you want to have different things
+
+[8:41] 
+that's like how lein tasks end up being
+
+[8:41] 
+with keys for every permutation of thing you could want
+
+mobileink [8:41 AM] 
+actually i have given some thought to breaking up the config map.  most of it is only needed for the config task, but some of it must be shared with the servlets task as well
+
+micha [8:42 AM] 
+i think there are different orthogonal concerns in there
+
+[8:42] 
+that can be factored out
+
+[8:42] 
+into separate tasks
+
+[8:42] 
+you would need to have a sort of model for what a gae application is
+
+[8:42] 
+at the highest level
+
+[8:42] 
+sort of like the .cljs.edn thing for cljs apps
+
+[8:43] 
+like compare the boot cljs stuff to figwheel
+
+[8:43] 
+in boot there are separate, orthogonal tasks for compilation, live reload, repl, and incremental compilation
+
+[8:43] 
+so each one has only a shallow small map of options
+
+mobileink [8:44 AM] 
+those are great suggestions.  now that I've got something working (I actually need it for another project), I can make such refactoring etc. a goal for the next version.
+
+micha [8:44 AM] 
+but they all coordinate around the application spec, which is the .cljs.edn file
+
+[8:44] 
+but the cool part is that the cljs.edn file is actually created by the tasks, too
+
+[8:44] 
+like you create a minimal one
+
+[8:44] 
+if you use the reload task, it actually modifies the .cljs.edn file, adding the reload client etc
+
+[8:45] 
+to your application
+
+[8:45] 
+so at the end of the day the .cljs.edn file may have lots of things in it
+
+[8:45] 
+but they're mostly generated automatically from simple options passed to tasks
+
+mobileink [8:45 AM] 
+part of the problem is that i think i still have not completely grokked the fileset model.  i had several smaller tasks but could not figure out how to pipeline them - e.g. one task would end up removing something needed by the next task.
+
+[8:47] 
+I will definitely look more closely at the strategy used by boot-cljs.  looked at it briefly but didn't really understand .cljs.edn.  next task is to add some Clojurescript to the sample gae webapp using boot-cljs, so I'll be studying that.
+
+micha [8:48 AM] 
+yeah the main concept there is to devise a high level model for what a gae application is
+
+mobileink [8:48 AM] 
+I'm glad I asked you folks to take a look before announcing it - now I'm thinking I'll make some of the mods you've suggested before doing so.
+
+micha [8:48 AM] 
+examples of such models are like the .cljs.edn spec, the pom.xml, the web.xml, etc
+
+[8:48] 
+these files allow you to express the structure of a thing
+
+mobileink [8:48 AM] 
+@micha:  @alandipert Thanks so much for your help!
+
+micha [8:49 AM] 
+then you can have different tasks that do one small part of the process
+
+[8:49] 
+if they can look at the spec they can understand the user's intent
+
+[8:49] 
+becaue the spec is a specification of the high level structure of the thing
+
+[8:49] 
+so like the jar task can find your pom.xml, and it can then know how to make a friendly name for the jar
+
+[8:49] 
+like project-version.jar
+
+[8:50] 
+because the pom is a universal project specification
+
+[8:50] 
+i think that's the key to hoisting out of the config map tarpit
+
+[8:51] 
+once you've devised a really good spec, you can then autogenerate the config in most cases
+
+[8:51] 
+given just a few key pieces of information
+
+micha [8:57 AM] 
+@mobileink: i hope i didn't come off as sounding critical, i didn't mean it that way
+
+[8:57] 
+i get carried away lol
+
+[8:57] 
+the existing implementation is A+ too
+
+mobileink [8:57 AM] 
+I like critical!
+
+[8:58] 
+You can't learn anything if you can't take constructive criticism.
+
+micha [8:58 AM] 
+ok cool, i talk out my butt a lot :simple_smile:
+
+mobileink [8:59 AM] 
+np
+
+[9:00] 
+btw, do you know if there is any way to bookmark slack?  I want to keep track of your suggestions - is copying the only way?
+
+micha [9:01 AM] 
+i think so, slack deletes history pretty aggressively for free accounts
+

@@ -1,0 +1,10 @@
+= boot-fails
+
+[quote, Henry Petroski, Design Paradigms: Case Histories of Error and Judgment in Engineering]
+____
+The concept of failure is central to the design process, and it is by
+thinking in terms of obviating failure that successful designs are
+achieved. It has long been practically a truism among practicing
+engineers and designers that we learn much more from failures than
+from successes.
+____
