@@ -105,3 +105,7 @@ essential to illustrating the fail, to keep things clean and simple.
 = roadmap
 
 * add some tasks designed to explore pods and show how to misuse them.
+
+Some fails to be added:
+
+* `sh` instead of `dosh`:  https://github.com/boot-clj/boot/issues/177
