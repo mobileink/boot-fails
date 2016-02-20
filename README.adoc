@@ -9,3 +9,24 @@ ____
 
 = boot-fails
 
+This is a simple task library and app designed to make it easy to
+break things in boot and learn from the experience.
+
+You can read all the documentation you want, but the way to really
+learn boot is to use it.  However, there is a lot of functionality in
+boot.  If you're in the middle of writing a boot library of any
+complexity, you might find you need to do some experimenting with some
+part of the boot API in order to really understand how to use it
+properly.  If you do that in your dev tree its easy to clutter up your
+code, and even lose track of which bits of code are for ad-hoc
+experimenting and which are actually needed.
+
+This project provides a minimal framework that can be used to explore
+boot without cluttering up a real project.  Out of the box all it does
+is provide a structure and some debugging tasks you can use to dump
+information about boot's state.  Clojure beginners can learn from the
+source code how to examine namespaces, list interned symbols, etc.
+
+== roadmap
+
+* add some tasks designed to demo and explore pods.
