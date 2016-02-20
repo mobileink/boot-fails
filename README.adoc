@@ -74,8 +74,16 @@ $ boot fails/ns- -n foo.bar  ## list syms interned in ns foo.bar
 
 I put this thing together as a result of not really understanding some
 things about namespaces and using vars to store configuration info.
-Look for the three \*-config vars in the lib and app, and the `vars`
-task in the lib.
+Best practices say don't put config info in the environment, and don't
+use a "global" (i.e. boot.user) var either.  I wanted an example of
+how violating those guidelines might lead to heartache.  This code
+doesn't actually demo such problems, it just exhibits detailed info
+about some vars so you can see what's up with them.  Look for the
+three *-config vars in the lib and app, and the `vars` task in the
+lib.
+
+In the near future I expect to foul up some configuration-related code
+and update this with some more genuine fails.
 
 = breaking stuff
 
