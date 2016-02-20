@@ -89,4 +89,4 @@ essential to illustrating the fail, to keep things clean and simple.
 
 = roadmap
 
-* add some tasks designed to demo and explore pods.
+* add some tasks designed to explore pods and show how to misuse them.
