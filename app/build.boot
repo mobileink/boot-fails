@@ -10,7 +10,7 @@
                 "maven-central" "http://mvnrepository.com"
                 "central" "http://repo1.maven.org/maven2/"}
  :dependencies   '[[org.clojure/clojure "1.8.0" :scope "provided"]
-                   [boot/core "2.5.2" :scope "provided"]
+                   [boot/core "2.5.5" :scope "provided"]
                    [tmp.boot/boot-fails "0.1.0-SNAPSHOT"]])
 
 (require '[tmp.boot-fails :as fails]

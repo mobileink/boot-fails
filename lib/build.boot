@@ -9,7 +9,7 @@
                 #_["maven-central" "http://mvnrepository.com"]
                 "central" "http://repo1.maven.org/maven2/"}
  :dependencies   '[[org.clojure/clojure "1.8.0" :scope "provided"]
-                   [boot/core "2.5.2" :scope "provided"]
+                   [boot/core "2.5.5" :scope "provided"]
                    [adzerk/boot-test "1.0.7" :scope "test"]])
 
 (def root-config "hello")
